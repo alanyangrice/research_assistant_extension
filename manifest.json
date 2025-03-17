@@ -1,0 +1,48 @@
+{
+  "manifest_version": 3,
+  "name": "Research Assistant",
+  "version": "1.0",
+  "description": "A Chrome extension to help with research paper reading and understanding",
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "http://localhost:3000/*"
+  ],
+  "action": {
+    "default_popup": "src/frontend/popup/popup.html",
+    "default_icon": {
+      "16": "assets/icons/icon16.svg",
+      "48": "assets/icons/icon48.svg",
+      "128": "assets/icons/icon128.svg"
+    }
+  },
+  "icons": {
+    "16": "assets/icons/icon16.svg",
+    "48": "assets/icons/icon48.svg",
+    "128": "assets/icons/icon128.svg"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "css": ["src/frontend/content/content.css"],
+      "js": ["src/frontend/content/content.js"],
+      "type": "module"
+    }
+  ],
+  "web_accessible_resources": [{
+    "resources": [
+      "src/frontend/sidebar/*", 
+      "src/frontend/content/classes/ResearchAssistant.js",
+      "src/frontend/content/classes/DocumentManager.js",
+      "src/frontend/content/classes/ApiService.js",
+      "src/frontend/content/classes/SidebarManager.js",
+      "src/frontend/content/classes/TextSelectionManager.js",
+      "src/frontend/content/classes/config.js",
+      "src/frontend/content/classes/*",
+      "src/frontend/content/content.css"
+    ],
+    "matches": ["<all_urls>"]
+  }]
+} 

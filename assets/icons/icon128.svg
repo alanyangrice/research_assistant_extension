@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <!-- Background -->
+  <rect width="128" height="128" rx="20" fill="#4285f4" />
+  
+  <!-- Paper -->
+  <rect x="24" y="24" width="80" height="80" rx="4" fill="white" />
+  
+  <!-- Highlight -->
+  <rect x="34" y="42" width="60" height="8" rx="2" fill="#fbbc05" />
+  <rect x="34" y="58" width="40" height="8" rx="2" fill="#fbbc05" />
+  <rect x="34" y="74" width="50" height="8" rx="2" fill="#fbbc05" />
+  
+  <!-- Magnifying glass -->
+  <circle cx="88" cy="40" r="12" fill="none" stroke="#34a853" stroke-width="6" />
+  <line x1="97" y1="49" x2="104" y2="56" stroke="#34a853" stroke-width="6" stroke-linecap="round" />
+</svg> 

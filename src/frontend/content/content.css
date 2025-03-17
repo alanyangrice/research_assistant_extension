@@ -1,0 +1,106 @@
+/* Research Assistant Chrome Extension Styles */
+
+/* Selection button specific styles */
+#research-assistant-button {
+  position: absolute; /* Will be positioned dynamically via JS */
+  z-index: 2147483647;
+  cursor: pointer;
+  padding: 6px 12px;
+  font-size: 12px;
+  opacity: 1;
+  margin-top: 7px; /* Changed from -2px to 7px to lower the button */
+  background-color: #4a69bd;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  font-family: Arial, sans-serif;
+  pointer-events: auto !important; /* Ensure clicks are detected */
+}
+
+#research-assistant-button:hover {
+  background-color: #1e3799;
+}
+
+/* Toggle button styles */
+#research-assistant-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 2147483646;
+  padding: 8px 15px;
+  font-size: 14px;
+  background-color: #4a69bd;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  font-family: Arial, sans-serif;
+}
+
+#research-assistant-toggle:hover {
+  background-color: #1e3799;
+}
+
+/* Sidebar pullout handle */
+.sidebar-handle {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 150px; /* Increased from 100px to 150px */
+  background-color: #4a69bd;
+  color: white;
+  border: none;
+  border-radius: 4px 0 0 4px;
+  box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+  cursor: pointer;
+  z-index: 2147483646;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  padding: 10px 5px;
+  transition: right 0.3s ease;
+}
+
+.sidebar-handle:hover {
+  background-color: #1e3799;
+}
+
+.sidebar-handle-expanded {
+  right: 350px; /* Matches sidebar width */
+}
+
+/* Sidebar iframe styles */
+.research-assistant-sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 350px;
+  height: 100%;
+  z-index: 2147483645; /* Just below buttons */
+  border: none;
+  box-shadow: -2px 0 10px rgba(0,0,0,0.2);
+  background-color: #fff;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  resize: both;
+  overflow: hidden;
+  min-width: 300px;
+  max-width: 600px;
+  /* Additional sidebar properties moved from JS */
+  min-height: 400px;
+  max-height: 800px;
+  transition: right 0.3s ease;
+}
+
+/* Collapsed state - sidebar moves off-screen but handle remains visible */
+.research-assistant-sidebar-collapsed {
+  right: -350px;
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Research Assistant</title>
+  <link rel="stylesheet" href="sidebar.css">
+</head>
+<body>
+  <div class="sidebar-container">
+    <div class="sidebar-header">
+      <h2>Research Assistant</h2>
+      <button id="close-button">&times;</button>
+    </div>
+    
+    <div class="sidebar-content" id="content">
+      <!-- Loading indicator - always present but hidden when not needed -->
+      <div id="loading" class="loading-indicator">
+        <div class="spinner"></div>
+        <p>Generating explanation...</p>
+      </div>
+      
+      <!-- Current explanation section - initially hidden until there's content -->
+      <div class="current-explanation" id="current-explanation" style="display: none;">
+        <div id="selected-text" class="selected-text"></div>
+        <div id="explanation" class="explanation"></div>
+        
+        <!-- Citations section -->
+        <div id="citations-container" class="citations-container" style="display: none;">
+          <h3>Citations</h3>
+          <div id="citations" class="citations"></div>
+        </div>
+      </div>
+      
+      <!-- Initial message - shown by default -->
+      <div id="initial-message" class="initial-message">
+        <p>Select text in the paper and click "Explain" to get an explanation.</p>
+      </div>
+      
+      <!-- History heading will be positioned here -->
+      <!-- History container will be positioned here -->
+    </div>
+  </div>
+  
+  <script src="sidebar.js"></script>
+</body>
+</html> 
