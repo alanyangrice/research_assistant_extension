@@ -25,6 +25,7 @@ function initialize() {
   const header = document.querySelector('.sidebar-header');
   const initialMessage = document.getElementById('initial-message');
   const currentExplanation = document.getElementById('current-explanation');
+  const selectedTextElement = document.getElementById('selected-text');
   
   // Add event listeners
   closeButton.addEventListener('click', closeSidebar);
@@ -84,8 +85,13 @@ function initialize() {
   // Create history container
   createHistoryContainer();
   
-  // Initial message is already shown in HTML
-  debugLog("Sidebar initialized");
+  // Set initial state
+  if (loadingIndicator) loadingIndicator.style.display = 'none';
+  if (initialMessage) initialMessage.style.display = 'block';
+  if (currentExplanation) currentExplanation.style.display = 'none';
+  if (selectedTextElement) selectedTextElement.style.display = 'none';
+  
+  debugLog("Sidebar initialized with default state");
 }
 
 // Add resize handle to the sidebar
@@ -188,12 +194,13 @@ function handleMessage(event) {
 }
 
 // Show or hide the loading indicator
-function showLoading(show) {
+function showLoading(show, textToExplain = '') {
   const loadingIndicator = document.getElementById('loading');
   const explanationElement = document.getElementById('explanation');
   const selectedTextElement = document.getElementById('selected-text');
   const initialMessage = document.getElementById('initial-message');
   const currentExplanation = document.getElementById('current-explanation');
+  const historyContainer = document.getElementById('history-container');
   
   if (!loadingIndicator) {
     debugLog("Error: Loading indicator not found");
@@ -205,19 +212,46 @@ function showLoading(show) {
     // Add current explanation to history before showing the loading indicator
     addCurrentToHistory();
     
-    // Clear the current explanation content after moving it to history
+    // Clear the explanation content after moving it to history
     if (explanationElement) explanationElement.innerHTML = '';
-    if (selectedTextElement) selectedTextElement.textContent = '';
-  }
-  
-  // Control the loading indicator visibility
-  loadingIndicator.style.display = show ? 'flex' : 'none';
-  
-  // If loading, clear any previous explanation
-  if (show) {
-    // When starting to load, if we don't have existing content, hide explanation and show message
+    
+    // Always clear the previous selected text when starting a new explanation
+    if (selectedTextElement) {
+      // Update with new text or clear it
+      if (textToExplain) {
+        selectedTextElement.textContent = textToExplain;
+        selectedTextElement.style.display = 'block';
+      } else {
+        selectedTextElement.textContent = '';
+        selectedTextElement.style.display = 'none';
+      }
+    }
+    
+    // Show loading indicator and hide other elements
+    loadingIndicator.style.display = 'flex';
     if (currentExplanation) currentExplanation.style.display = 'none';
-    if (initialMessage) initialMessage.style.display = 'block';
+    if (initialMessage) initialMessage.style.display = 'none';
+  } else {
+    // Hide loading indicator when not loading
+    loadingIndicator.style.display = 'none';
+    
+    // Check if we have any explanations at all (current or history)
+    const hasHistory = historyContainer && historyContainer.children.length > 0;
+    const hasCurrentExplanation = explanationElement && explanationElement.textContent.trim() !== '';
+    
+    // Only show initial message if there are no explanations or selected text
+    const hasSelectedText = selectedTextElement && selectedTextElement.textContent.trim() !== '';
+    
+    if (!hasHistory && !hasCurrentExplanation && !hasSelectedText) {
+      // Show initial message if no content at all
+      if (initialMessage) initialMessage.style.display = 'block';
+      if (selectedTextElement) selectedTextElement.style.display = 'none';
+      if (currentExplanation) currentExplanation.style.display = 'none';
+    } else {
+      // Show explanation area if we have content
+      if (initialMessage) initialMessage.style.display = 'none';
+      if (currentExplanation) currentExplanation.style.display = 'block';
+    }
   }
 }
 
@@ -233,17 +267,19 @@ function displayExplanation(text, explanation, citations = [], type = 'general')
   // We don't need to add current to history here anymore since we do it in showLoading
   // when a new explanation is requested
   
-  // Hide initial message and show explanation container
+  // Always hide the initial message and show the explanation container
+  // when displaying an explanation
   const initialMessage = document.getElementById('initial-message');
   const currentExplanation = document.getElementById('current-explanation');
   
   if (initialMessage) initialMessage.style.display = 'none';
   if (currentExplanation) currentExplanation.style.display = 'block';
   
-  // Display the selected text
+  // Set or update the selected text
   const selectedTextElement = document.getElementById('selected-text');
   if (selectedTextElement) {
     selectedTextElement.textContent = text;
+    selectedTextElement.style.display = 'block';
   } else {
     debugLog("Error: Selected text element not found");
   }
@@ -270,11 +306,8 @@ function displayExplanation(text, explanation, citations = [], type = 'general')
   
   debugLog("Added new explanation to history, total:", explanationHistory.length);
   
-  // Make sure the history heading is visible
-  const historyHeading = document.getElementById('history-heading');
-  if (historyHeading) {
-    historyHeading.style.display = 'block';
-  }
+  // Make sure the history heading is visible if we have history items
+  updateHistoryHeadingVisibility();
 }
 
 // Add the current main explanation to history before showing a new one
@@ -293,16 +326,10 @@ function addCurrentToHistory() {
   
   // Get the history container
   const historyContainer = document.getElementById('history-container');
-  const historyHeading = document.getElementById('history-heading');
   
   if (!historyContainer) {
     debugLog("Error: History container not found");
     return;
-  }
-  
-  // Make history heading visible once we have items
-  if (historyHeading) {
-    historyHeading.style.display = 'block';
   }
   
   // Get the explanation content (the actual explanation, not the container)
@@ -353,6 +380,9 @@ function addCurrentToHistory() {
   if (historyItems.length > 5) {
     historyContainer.removeChild(historyItems[historyItems.length - 1]);
   }
+  
+  // Update history heading visibility
+  updateHistoryHeadingVisibility();
 }
 
 // Format the explanation based on type
@@ -440,4 +470,17 @@ function displayCitations(citations) {
 function closeSidebar() {
   debugLog("Sending closeSidebar message to parent");
   window.parent.postMessage({ action: 'closeSidebar' }, '*');
-} 
+}
+
+// Update history heading visibility based on whether we have history items
+function updateHistoryHeadingVisibility() {
+  const historyHeading = document.getElementById('history-heading');
+  const historyContainer = document.getElementById('history-container');
+  
+  if (historyHeading && historyContainer) {
+    // Only show the heading if there are actual history items
+    const hasHistoryItems = historyContainer.children.length > 0;
+    historyHeading.style.display = hasHistoryItems ? 'block' : 'none';
+    debugLog("Updated history heading visibility:", hasHistoryItems);
+  }
+}
