@@ -7,6 +7,7 @@ class SidebarManager {
     this.visible = false;
     this.sidebarHandle = null;
     this.eventListeners = [];
+    this.preventHandleClick = false; // flag to prevent click toggle when dragging
   }
 
   initialize() {
@@ -33,25 +34,79 @@ class SidebarManager {
     this.sidebarHandle.className = 'sidebar-handle';
     this.sidebarHandle.innerHTML = 'Research Assistant';
     
-    // Click handler - only for toggling visibility
+    // Click handler - toggles visibility only if not dragging
     const handleClickListener = (e) => {
+      if (this.preventHandleClick) {
+        // Reset the flag and do not toggle
+        this.preventHandleClick = false;
+        e.preventDefault();
+        return;
+      }
       if (this.visible) {
         this.hide();
       } else {
         this.show();
       }
-      
       // Prevent default to avoid text selection
       e.preventDefault();
     };
     
     this.sidebarHandle.addEventListener('click', handleClickListener);
-    
     this.eventListeners.push({ 
       element: this.sidebarHandle, 
       type: 'click', 
       listener: handleClickListener 
     });
+
+    // Mousedown listener for resizing the sidebar
+    this.sidebarHandle.addEventListener('pointerdown', (e) => {
+      // Only allow resizing when the sidebar is visible
+      if (!this.visible) return;
+      
+      e.preventDefault();
+      e.target.setPointerCapture(e.pointerId);
+      document.body.style.cursor = 'ew-resize';
+
+      this.sidebar.style.transition = 'none';
+      this.sidebarHandle.style.transition = 'none';
+      
+      let startX = e.clientX;
+      let startWidth = parseInt(this.sidebar.style.width, 10) || 350;
+      let dragging = false;
+      
+      const onPointerMove = (moveEvent) => {
+        dragging = true;
+        // Calculate the change in pointer position relative to its start.
+        // If the pointer moves left, delta is positive, increasing the width.
+        // If it moves right, delta is negative, decreasing the width.
+        const delta = startX - moveEvent.clientX;
+        let newWidth = startWidth + delta;
+        // Clamp the new width between 300px and 600px
+        newWidth = Math.max(300, Math.min(newWidth, 600));
+        
+        // Update the sidebar width and reposition the handle so they remain in sync
+        this.sidebar.style.width = newWidth + 'px';
+        this.sidebarHandle.style.right = newWidth + 'px';
+        console.log('New sidebar width:', newWidth);
+      };
+    
+      const onPointerUp = () => {
+        document.body.style.cursor = '';
+        document.removeEventListener('pointermove', onPointerMove);
+        document.removeEventListener('pointerup', onPointerUp);
+
+        this.sidebar.style.transition = 'right 0.3s ease, width 0.3s ease';
+        this.sidebarHandle.style.transition = 'right 0.3s ease';
+        
+        // If dragging occurred, prevent the subsequent click event from toggling the sidebar
+        if (dragging) {
+          this.preventHandleClick = true;
+        }
+      };
+    
+      document.addEventListener('pointermove', onPointerMove);
+      document.addEventListener('pointerup', onPointerUp);
+    });    
     
     document.body.appendChild(this.sidebarHandle);
     console.log('Sidebar handle created and added to the page');

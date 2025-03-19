@@ -19,7 +19,7 @@ function initialize() {
   debugLog("Initializing sidebar");
   
   // Get DOM elements
-  const closeButton = document.getElementById('close-button');
+  //const closeButton = document.getElementById('close-button');
   const loadingIndicator = document.getElementById('loading');
   const contentArea = document.getElementById('content');
   const header = document.querySelector('.sidebar-header');
@@ -28,7 +28,7 @@ function initialize() {
   const selectedTextElement = document.getElementById('selected-text');
   
   // Add event listeners
-  closeButton.addEventListener('click', closeSidebar);
+  //closeButton.addEventListener('click', closeSidebar);
   
   // Add dragging functionality
   let isDragging = false;
@@ -39,15 +39,15 @@ function initialize() {
   let xOffset = 0;
   let yOffset = 0;
 
-  header.addEventListener('mousedown', dragStart);
-  document.addEventListener('mousemove', drag);
-  document.addEventListener('mouseup', dragEnd);
+  header.addEventListener('pointerdown', dragStart);
+  document.addEventListener('pointermove', drag);
+  document.addEventListener('pointerup', dragEnd);
   
   function dragStart(e) {
     initialX = e.clientX - xOffset;
     initialY = e.clientY - yOffset;
     
-    if (e.target === header || e.target === closeButton) {
+    if (e.target === header) { //|| e.target === closeButton) {
       isDragging = true;
     }
   }
