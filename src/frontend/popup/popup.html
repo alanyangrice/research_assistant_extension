@@ -3,80 +3,88 @@
 <head>
   <meta charset="UTF-8">
   <title>Research Paper Assistant</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      width: 300px;
-      padding: 15px;
-      color: #333;
-    }
-    
-    h2 {
-      color: #4285f4;
-      margin-top: 0;
-    }
-    
-    p {
-      font-size: 14px;
-      line-height: 1.5;
-    }
-    
-    .instructions {
-      background-color: #f5f5f5;
-      padding: 10px;
-      border-radius: 4px;
-      margin-bottom: 15px;
-    }
-    
-    .instructions ol {
-      margin: 10px 0;
-      padding-left: 25px;
-    }
-    
-    .instructions li {
-      margin-bottom: 8px;
-    }
-    
-    .footer {
-      font-size: 12px;
-      color: #666;
-      margin-top: 15px;
-      text-align: center;
-    }
-    
-    button {
-      background-color: #4285f4;
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 4px;
-      cursor: pointer;
-      width: 100%;
-      font-size: 14px;
-      margin-top: 10px;
-    }
-    
-    button:hover {
-      background-color: #3367d6;
-    }
-  </style>
+  <link rel="stylesheet" href="popup.css">
 </head>
 <body>
   <h2>Research Paper Assistant</h2>
   
-  <div class="instructions">
-    <p><strong>How to use:</strong></p>
-    <ol>
-      <li>Navigate to a research paper</li>
-      <li>Select text (words, phrases, or paragraphs)</li>
-      <li>Click the "Explain" button that appears</li>
-      <li>View explanations in the sidebar</li>
-    </ol>
+  <!-- Login Section -->
+  <div id="login-section" class="hidden">
+    <p>Automatic sign in with your Chrome account is enabled.</p>
+    <p>If automatic login doesn't work, you can use the test login:</p>
+    
+    <button id="test-login-button">Test Login (Development Only)</button>
+    
+    <div class="info-box">
+      <p><small>Note: Make sure you're signed into Chrome to use this extension.</small></p>
+    </div>
   </div>
   
-  <p>This extension helps you understand research papers by providing explanations for selected text and citing relevant parts of the paper.</p>
+  <!-- Logged In Section -->
+  <div id="logged-in-section" class="hidden">
+    <div class="user-info">
+      <div class="user-avatar">
+        <img id="user-avatar-img" src="" alt="Profile picture">
+      </div>
+      <div class="user-details">
+        <div id="user-name" class="user-name"></div>
+        <div id="user-email" class="user-email"></div>
+        <!-- Subscription Info - Will be displayed when user is logged in -->
+        <div id="subscription-info" class="subscription-info">
+          <div class="subscription-text">Subscription: <span id="plan-name" class="plan-name">Free</span></div>
+          <div class="dropdown-icon">▼</div>
+        </div>
+      </div>
+    </div>
   
-  <button id="options-button">Extension Options</button>
+    <div class="instructions">
+      <p><strong>How to use:</strong></p>
+      <ol>
+        <li>Navigate to a research paper</li>
+        <li>Select text (words, phrases, or paragraphs)</li>
+        <li>Click the "Explain" button that appears</li>
+        <li>View explanations in the sidebar</li>
+      </ol>
+    </div>
+        
+    <button id="options-button">Extension Options</button>
+    <button id="logout-button">Sign Out</button>
+  </div>
+  
+  <!-- Loading Section -->
+  <div id="loading-section" class="hidden">
+    <p style="text-align: center; margin: 30px 0;">
+      Loading...
+    </p>
+  </div>
+  
+  <!-- Subscription Dropdown -->
+  <div id="subscription-dropdown" class="subscription-dropdown hidden">
+    <div class="dropdown-header">Subscription Options</div>
+    <div id="free-tier" class="dropdown-section free-tier">
+      <div class="tier-name">Free Tier</div>
+      <div class="tier-features">
+        <ul>
+          <li>Basic explanations</li>
+          <li>Up to 10 queries per day</li>
+        </ul>
+      </div>
+    </div>
+    <div id="premium-tier" class="dropdown-section premium-tier">
+      <div class="tier-name">Premium Tier</div>
+      <div class="tier-features">
+        <ul>
+          <li>Advanced explanations</li>
+          <li>Unlimited queries</li>
+          <li>Access to all research tools</li>
+        </ul>
+      </div>
+      <div class="tier-pricing">
+        <div class="price-option">$5 billed monthly</div>
+        <div class="price-option best-value">$40 billed yearly <span class="save-tag">Save 33%</span></div>
+      </div>
+    </div>
+  </div>
   
   <div class="footer">
     Research Paper Assistant v1.0

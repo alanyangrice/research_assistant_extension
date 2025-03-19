@@ -5,11 +5,17 @@
   "description": "A Chrome extension to help with research paper reading and understanding",
   "permissions": [
     "activeTab",
-    "storage"
+    "storage",
+    "identity"
   ],
   "host_permissions": [
-    "http://localhost:3000/*"
+    "http://localhost:3000/*",
+    "http://localhost:3001/*"
   ],
+  "background": {
+    "service_worker": "src/backend/extensionScripts/background.js",
+    "type": "module"
+  },
   "action": {
     "default_popup": "src/frontend/popup/popup.html",
     "default_icon": {
@@ -41,8 +47,16 @@
       "src/frontend/content/classes/TextSelectionManager.js",
       "src/frontend/content/classes/config.js",
       "src/frontend/content/classes/*",
-      "src/frontend/content/content.css"
+      "src/frontend/content/content.css",
+      "src/frontend/popup/popup.css"
     ],
     "matches": ["<all_urls>"]
-  }]
+  }],
+  "oauth2": {
+    "client_id": "96490192377-lau4fkn9mfjqvdkdr1s8mdq3meoj1vd3.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile"
+    ]
+  }
 } 

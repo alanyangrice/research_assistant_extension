@@ -1,0 +1,377 @@
+body {
+  font-family: Arial, sans-serif;
+  width: 300px;
+  padding: 15px;
+  color: #333;
+}
+
+h2 {
+  color: #5797fd;
+  margin-top: 0;
+}
+
+p {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.instructions {
+  background-color: #f5f5f5;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+.instructions ol {
+  margin: 10px 0;
+  padding-left: 25px;
+}
+
+.instructions li {
+  margin-bottom: 8px;
+}
+
+.footer {
+  font-size: 12px;
+  color: #666;
+  margin-top: 15px;
+  text-align: center;
+}
+
+button {
+  background-color: #5797fd;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #3367d6;
+}
+
+.hidden {
+  display: none;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+  background-color: #ddd;
+  overflow: hidden;
+}
+
+.user-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.user-details {
+  flex: 1;
+  position: relative;
+}
+
+.user-name {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.user-email {
+  font-size: 12px;
+  color: #666;
+}
+
+/* Subscription info styles */
+.subscription-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+  padding: 5px 8px;
+  background-color: #eee;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.subscription-info:hover {
+  background-color: #e0e0e0;
+}
+
+.subscription-info.premium {
+  background-color: #fff9e6;
+  border: 1px solid #ffd700;
+}
+
+.subscription-info.premium:hover {
+  background-color: #fff5d6;
+}
+
+.subscription-text {
+  font-weight: bold;
+}
+
+.plan-name {
+  color: #333;
+}
+
+.premium .plan-name {
+  color: #b8860b;
+}
+
+.dropdown-icon {
+  font-size: 10px;
+  margin-left: 5px;
+  color: #777;
+}
+
+/* Subscription dropdown styles */
+.subscription-dropdown {
+  position: absolute;
+  width: 100%;
+  background-color: white;
+  border-radius: 4px;
+  z-index: 100;
+  font-size: 13px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  margin-top: 2px;
+  border: 1px solid #ccc;
+}
+
+/* When the user has premium, style the dropdown to match */
+.premium + .subscription-dropdown,
+.subscription-dropdown .premium-tier.current {
+  background-color: white;
+  border: 1px solid #ffd700;
+  box-shadow: 0 4px 12px rgba(184, 134, 11, 0.15);
+}
+
+.dropdown-header {
+  background-color: #f0f0f0;
+  padding: 12px;
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+  color: #333;
+}
+
+.dropdown-section {
+  padding: 14px 12px;
+  border-bottom: 1px solid #e5e5e5;
+  background-color: white;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-section:hover {
+  background-color: #f8f8f8;
+}
+
+.dropdown-section:last-child {
+  border-bottom: none;
+}
+
+.dropdown-section.current {
+  background-color: #f3f9ff;
+  position: relative;
+}
+
+.dropdown-section.current::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: #5797fd;
+}
+
+.dropdown-section.premium-tier {
+  border-top: 1px solid #e5e5e5;
+}
+
+.premium-tier.current::before {
+  background-color: #ffd700;
+}
+
+.tier-name {
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.free-tier .tier-name {
+  color: #555;
+}
+
+.premium-tier .tier-name {
+  color: #b8860b;
+}
+
+.tier-features ul {
+  margin: 5px 0;
+  padding-left: 20px;
+}
+
+.tier-features li {
+  margin-bottom: 4px;
+  font-size: 12px;
+}
+
+.tier-pricing {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed #e0e0e0;
+}
+
+.price-option {
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 12px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.price-option:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.price-option:last-child {
+  margin-bottom: 0;
+}
+
+.price-option.best-value {
+  background-color: #fffceb;
+  border: 1px solid #ffd700;
+}
+
+.price-option.best-value:hover {
+  background-color: #fff9d6;
+}
+
+.save-tag {
+  font-size: 10px;
+  background-color: #ff6b6b;
+  color: white;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-weight: bold;
+  margin-left: 5px;
+  position: relative;
+  top: -1px;
+}
+
+/* Subscription badge styles */
+.subscription-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: bold;
+  color: #777;
+  background-color: #eee;
+  padding: 2px 6px;
+  border-radius: 12px;
+  margin-top: 5px;
+}
+
+.subscription-badge.premium {
+  background-color: #ffd700;
+  color: #333;
+}
+
+.info-box {
+  background-color: #e6f7ff;
+  border: 1px solid #91d5ff;
+  border-radius: 4px;
+  padding: 8px 12px;
+  margin: 10px 0;
+  font-size: 12px;
+}
+
+#login-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#login-button img {
+  margin-right: 8px;
+  width: 18px;
+  height: 18px;
+}
+
+/* Login divider */
+.login-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 15px 0;
+}
+
+.login-divider::before,
+.login-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #ddd;
+}
+
+.login-divider span {
+  padding: 0 10px;
+  color: #888;
+  font-size: 12px;
+}
+
+/* Secondary button */
+.secondary-button {
+  background-color: #f1f1f1;
+  color: #444;
+  border: 1px solid #ddd;
+}
+
+.secondary-button:hover {
+  background-color: #e7e7e7;
+}
+
+#manual-login-form {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #f8f8f8;
+  border-radius: 4px;
+  text-align: center;
+}
+
+#manual-login-form p {
+  margin: 0 0 8px 0;
+}
+
+#test-login-button {
+  background-color: #ff9800;
+  border: none;
+  color: white;
+}
+
+#test-login-button:hover {
+  background-color: #e08600;
+} 
