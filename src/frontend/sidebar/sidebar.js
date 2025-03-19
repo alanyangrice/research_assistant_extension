@@ -75,10 +75,6 @@ function initialize() {
     el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
   }
   
-  // Add resize functionality
-  const sidebarContainer = document.querySelector('.sidebar-container');
-  addResizeHandle(sidebarContainer);
-  
   // Listen for messages from the content script
   window.addEventListener('message', handleMessage);
   
@@ -92,37 +88,6 @@ function initialize() {
   if (selectedTextElement) selectedTextElement.style.display = 'none';
   
   debugLog("Sidebar initialized with default state");
-}
-
-// Add resize handle to the sidebar
-function addResizeHandle(container) {
-  const resizeHandle = document.createElement('div');
-  resizeHandle.className = 'resize-handle';
-  container.appendChild(resizeHandle);
-  
-  let isResizing = false;
-  let initialWidth, initialHeight;
-  
-  resizeHandle.addEventListener('mousedown', function(e) {
-    isResizing = true;
-    initialWidth = container.offsetWidth;
-    initialHeight = container.offsetHeight;
-    e.preventDefault();
-  });
-  
-  document.addEventListener('mousemove', function(e) {
-    if (!isResizing) return;
-    
-    const sidebar = window.parent.document.getElementById('research-assistant-sidebar');
-    if (sidebar) {
-      sidebar.style.width = (initialWidth + (e.clientX - initialX)) + 'px';
-      sidebar.style.height = (initialHeight + (e.clientY - initialY)) + 'px';
-    }
-  });
-  
-  document.addEventListener('mouseup', function() {
-    isResizing = false;
-  });
 }
 
 // Create the history container for storing multiple explanations

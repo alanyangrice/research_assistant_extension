@@ -210,6 +210,22 @@ class TextSelectionManager {
     this.sidebarManager.show();
     this.sidebarManager.setLoading(true);
     
+    // Determine explanation type based on selection size
+    let type = 'general';
+    const words = textToExplain.trim().split(/\s+/);
+    const wordCount = words.length;
+    
+    if (wordCount <= 3) {
+      type = 'definition';
+      console.log('Selection is 1-3 words, using definition type');
+    } else if (textToExplain.includes('\n') || wordCount > 50) {
+      type = 'paragraph';
+      console.log('Selection appears to be a paragraph, using paragraph type');
+    } else if (wordCount <= 50) {
+      type = 'concept';
+      console.log('Selection appears to be a sentence, using concept type');
+    }
+    
     try {
       console.log('Extracting context...');
       const context = this.documentManager.extractSurroundingContext(textToExplain);
@@ -283,7 +299,8 @@ class TextSelectionManager {
       const explanation = await this.apiService.generateExplanation({
         selectedText: textToExplain,
         documentContext: context,
-        citationTexts: this.documentManager.documentReferences || []
+        citationTexts: this.documentManager.documentReferences || [],
+        type: type // Pass the determined type to the API
       });
       
       if (!explanation) {
@@ -294,7 +311,7 @@ class TextSelectionManager {
       this.sidebarManager.showExplanation({
         text: textToExplain,
         explanation: explanation,
-        type: 'general'
+        type: type // Use the determined type for display
       });
     } catch (error) {
       console.error('Error generating explanation:', error);

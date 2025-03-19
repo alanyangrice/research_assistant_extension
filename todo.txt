@@ -1,0 +1,26 @@
+Current:
+1. Change the functionality of the text summarize/explanation
+        a. If there is more text highlighted, probably wants a summary of it.
+            Want to make it in context of the sources it cites, so need to be able to cite
+            the sources in our summarizing generator
+        b. If there is a single word, probably wants a definition of the term or word
+        c. If there is a sentence or more than a few words, probably want an explanation
+            of the idea in the context of the paper
+2. To achieve 1a. I need to be able to scrape the website for the sources quickly and be
+    able to determine what sources were mentioned in a section
+3. Fix the styling of the sidebar
+4. Be able to click a button to tell GPT to generate a simpler or more complex response.
+        a. Be able to start a sidechat with GPT to discuss and ask followup questions
+
+Future:
+1. Be able to use it on PDFs
+2. Add some highlighting feature so if you click on the highlight, it can bring you back
+    to the previously explained block
+3. Let the user be able to customize the explanation styles
+4. AI-Powered question answering, let the user ask follow-up questions based on highlighted
+    text
+5. Maybe export notes to a google doc?
+6. Maybe allow the user to type in notes they want to take about the paper they are reading
+    and make use of point 5?
+7. For more specific domains like ML or math, maybe be able to select an image of text to add
+    to the explanation so the user can capture complex formulas to be explained

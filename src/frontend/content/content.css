@@ -66,7 +66,8 @@
   font-family: Arial, sans-serif;
   font-size: 14px;
   padding: 10px 5px;
-  transition: right 0.3s ease;
+  transition: right 0.3s ease; /* Add default transition to match sidebar */
+  user-select: none; /* Prevent text selection during drag */
 }
 
 .sidebar-handle:hover {
@@ -74,7 +75,8 @@
 }
 
 .sidebar-handle-expanded {
-  right: 350px; /* Matches sidebar width */
+  /* right will be set dynamically via JS to match sidebar width */
+  transition: right 0.3s ease; /* Keep transition for show/hide */
 }
 
 /* Sidebar iframe styles */
@@ -90,7 +92,6 @@
   background-color: #fff;
   transform: translate3d(0, 0, 0);
   will-change: transform;
-  resize: both;
   overflow: hidden;
   min-width: 300px;
   max-width: 600px;
@@ -102,5 +103,5 @@
 
 /* Collapsed state - sidebar moves off-screen but handle remains visible */
 .research-assistant-sidebar-collapsed {
-  right: -350px;
+  /* right will be set dynamically based on width */
 }

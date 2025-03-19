@@ -3,15 +3,11 @@
   position: fixed;
   top: 0;
   right: 0;
-  width: 350px;
   height: 100%;
   border: none;
   z-index: 9999;
   box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
-  resize: both;
   overflow: auto;
-  min-width: 300px;
-  min-height: 200px;
 }
 
 /* Explanation button styling */
@@ -271,16 +267,3 @@
   padding-bottom: 15px;
   margin-bottom: 15px;
 }
-
-/* Resize handle styling */
-.resize-handle {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 20px;
-  height: 20px;
-  cursor: se-resize;
-  background: #f0f0f0;
-  border-top-left-radius: 5px;
-  z-index: 20;
-} 

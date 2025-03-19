@@ -20,6 +20,14 @@ router.post('/', validateRequest, async (req, res) => {
     
     console.log(`Generating explanation for text type: ${type}, with ${citationTexts.length} citations`);
     
+    if (type === 'definition') {
+      console.log('Processing definition request for:', selectedText);
+    } else if (type === 'concept') {
+      console.log('Processing concept request, text length:', selectedText.length);
+    } else if (type === 'paragraph') {
+      console.log('Processing paragraph request, text length:', selectedText.length);
+    }
+    
     // Generate explanation using the OpenAI service
     const explanation = await openaiService.generateExplanation(
       selectedText, 

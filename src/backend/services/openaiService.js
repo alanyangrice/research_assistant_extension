@@ -23,6 +23,8 @@ async function generateExplanation(selectedText, documentContext, citationTexts 
   let prompt;
   let maxTokens = 350; // Default max tokens - reduced from 500
   
+  console.log(`Generating explanation for type: ${type}`);
+  
   // Customize the prompt based on the type of explanation needed
   switch (type) {
     case 'definition':
@@ -76,7 +78,7 @@ async function generateExplanation(selectedText, documentContext, citationTexts 
  */
 function createGeneralPrompt(selectedText, documentContext) {
   return `
-    Please provide a concise explaination of the following selected text \
+    Please provide a concise explanation of the following selected text \
     from a research paper:
     "${selectedText}"
 
@@ -98,8 +100,9 @@ function createDefinitionPrompt(term, documentContext) {
     ${documentContext.slice(0, 1000)}
 
     Provide a VERY BRIEF definition of this term as used in this context. 
-    Keep your explanation under 75 words total. Focus only on:
+    Keep your explanation under 50 words total. Focus only on:
     1. What the term means in this specific research context
+    2. Use simple, direct language
     `;
 }
 
@@ -125,18 +128,19 @@ function createParagraphPrompt(paragraph, documentContext, citationTexts) {
     ${citationTexts.map((text, i) => `Source ${i+1}: ${text}`).join('\n')}
     
     Please include:
-    1. A clear explanation of what this paragraph is communicating
-    2. How the cited works support or relate to the paragraph's claims
+    A clear explanation of what this paragraph is communicating.
+    How the cited works support or relate to the paragraph's main points if there are any included.
     `;
   } else {
     citationSection = `
     Please provide:
-    A clear and concise explanation of what this paragraph is communicating
+    A clear summary of the paragraph in simpler terms and the main point or 
+    finding being communicated if there is one.
     `;
   }
   
   return `
-    Explain this paragraph from a research paper:
+    Summarize and explain this paragraph from a research paper:
     "${paragraph}"
 
     Additional context from the paper:
@@ -144,7 +148,7 @@ function createParagraphPrompt(paragraph, documentContext, citationTexts) {
 
     ${citationSection}
     
-    Keep your explanation concise and to the point.
+    Keep your explanation concise and use simpler language than the original text.
     `;
 }
 
@@ -153,17 +157,17 @@ function createParagraphPrompt(paragraph, documentContext, citationTexts) {
  */
 function createConceptPrompt(conceptText, documentContext) {
   return `
-    Explain this concept from a research paper:
+    Explain this concept or statement from a research paper:
     "${conceptText}"
 
     Context from the paper:
     ${documentContext.slice(0, 1500)}
 
-    Please provide a concise explanation of:
-    1. What this concept means in the context of this research
-    2. How it's used in the paper
+    Please provide a concise explanation that:
+    1. Clarifies what this concept means in the context of this research
+    2. Explains why it's significant in this paper
     
-    Keep your explanation clear but brief.
+    Use clear language and keep your explanation under 100 words.
     `;
 }
 
