@@ -26,8 +26,9 @@ app.use((req, res, next) => {
 // Enable CORS for all routes
 app.use(cors({
   origin: '*', // Allow all origins in development
-  methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type']
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Origin', 'Authorization'],
+  credentials: true
 }));
 
 // Parse JSON bodies - Increased limit for larger documents
